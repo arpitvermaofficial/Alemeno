@@ -1,7 +1,10 @@
 import 'package:alemeno/Lab_test/view/Widgets/test_card.dart';
+import 'package:alemeno/Lab_test/view/cart_view.dart';
 import 'package:flutter/material.dart';
 import 'package:alemeno/Utils/colors.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../model/test_data.dart';
 
 class LabTests extends StatefulWidget {
   const LabTests({super.key});
@@ -12,6 +15,12 @@ class LabTests extends StatefulWidget {
 
 class _LabTestsState extends State<LabTests> {
   @override
+  int product_count=0;
+  addToCart(int newvalue) {
+    setState(() {
+      product_count+=newvalue;
+    });
+  }
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -28,14 +37,15 @@ class _LabTestsState extends State<LabTests> {
               padding: const EdgeInsets.all(0),
               child: Stack(
                 children: [
-                  const Positioned(
+                  if(product_count!=0)
+                   Positioned(
                     top: 15,
                     child: CircleAvatar(
                       maxRadius: 8,
                       backgroundColor: tealcolor,
                       child: Text(
-                        "1",
-                        style: TextStyle(
+                        "$product_count",
+                        style: const TextStyle(
                             color: darkblue,
                             fontSize: 9,
                             fontWeight: FontWeight.bold),
@@ -43,7 +53,9 @@ class _LabTestsState extends State<LabTests> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CartView()));
+                    },
                     icon: const Icon(
                       Icons.shopping_cart,
                       color: darkblue,
@@ -97,9 +109,9 @@ class _LabTestsState extends State<LabTests> {
                 Container(
                   height: size.height * 0.5,
                   child: GridView.builder(
-                    itemCount: 4,
+                    itemCount: Test_data.length,
                     itemBuilder: (context, index) {
-                      return Test_card();
+                      return Test_card(callback: this.addToCart,test_name: Test_data[index]['name'],newprice:Test_data[index]['newPrice'] ,oldprice: Test_data[index]['oldPrice'],tests:Test_data[index]['tests'] ,);
                     },
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,

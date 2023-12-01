@@ -2,10 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:alemeno/Utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Test_card extends StatelessWidget {
-  const Test_card({super.key});
+class Test_card extends StatefulWidget {
+  Function callback;
+  final String test_name;
+  final String oldprice;
+  final String newprice;
+  final String tests;
+  Test_card({
+    required this.callback,
+    Key? key, required this.test_name, required this.oldprice, required this.newprice, required this.tests,
+  }) : super(key: key);
 
   @override
+  State<Test_card> createState() => _Test_cardState();
+}
+
+class _Test_cardState extends State<Test_card> {
+  @override
+  bool pressed = false;
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -17,9 +31,9 @@ class Test_card extends StatelessWidget {
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(10), topLeft: Radius.circular(10)),
           ),
-          child: const Center(
+          child: Center(
               child: Text(
-            "Thyroid Profile",
+            widget.test_name,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           )),
@@ -39,7 +53,7 @@ class Test_card extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Includes 3 tests",
+                    "Includes ${widget.tests} tests",
                     style: TextStyle(color: lightblue, fontSize: 15),
                   ),
                   Container(
@@ -65,14 +79,14 @@ class Test_card extends StatelessWidget {
                 textBaseline: TextBaseline.ideographic,
                 children: [
                   Text(
-                    "\u{20B9} 200",
+                    "\u{20B9} ${widget.newprice}",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, color: darkblue),
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Text("300",
+                  Text("${widget.oldprice}",
                       style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
                           fontSize: 11)),
@@ -81,20 +95,28 @@ class Test_card extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 30,
-                width: double.infinity,
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: darkblue,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Text(
-                    "Add to Cart",
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
+              GestureDetector(
+                onTap: () {
+                  if (!pressed) {
+                    pressed = !pressed;
+                    widget.callback(1);
+                  }
+                },
+                child: Container(
+                  height: 30,
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: pressed ? tealcolor : darkblue,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Text(
+                      pressed ? "Added to Cart" : "Add to Cart",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),
