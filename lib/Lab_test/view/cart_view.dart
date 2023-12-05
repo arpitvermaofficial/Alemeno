@@ -386,7 +386,7 @@ class _CartViewState extends State<CartView> {
                 border: Border.all(color: darkblue, width: 2),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child:  Row(
+              child: Row(
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
@@ -395,7 +395,7 @@ class _CartViewState extends State<CartView> {
                     color: darkblue,
                   ),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         widget.allTest.removeAt(index);
                         cost_calculate();

@@ -4,7 +4,11 @@ class TestModel {
   late String oldPrice;
   late String tests;
 
-  TestModel({required this.name, required this.newPrice, required this.oldPrice, required this.tests});
+  TestModel(
+      {required this.name,
+      required this.newPrice,
+      required this.oldPrice,
+      required this.tests});
 
   TestModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];

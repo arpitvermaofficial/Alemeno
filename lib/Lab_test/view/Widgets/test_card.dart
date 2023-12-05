@@ -11,7 +11,12 @@ class Test_card extends StatefulWidget {
   final int index;
   Test_card({
     required this.callback,
-    Key? key, required this.test_name, required this.oldprice, required this.newprice, required this.tests, required this.index,
+    Key? key,
+    required this.test_name,
+    required this.oldprice,
+    required this.newprice,
+    required this.tests,
+    required this.index,
   }) : super(key: key);
 
   @override

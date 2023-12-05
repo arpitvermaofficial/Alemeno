@@ -27,16 +27,12 @@ class _BookApoitmentState extends State<BookApoitment> {
   callback3(
     newValue,
   ) {
-
     setState(() {
       _textValue = newValue;
-
-
     });
   }
 
   callback4(newValue) {
-
     setState(() {
       date_selected = newValue;
     });
@@ -47,9 +43,15 @@ class _BookApoitmentState extends State<BookApoitment> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (){
-          Navigator.pop(context);
-        }, icon: Icon(Icons.arrow_back,color: Colors.black,),),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
@@ -91,12 +93,12 @@ class _BookApoitmentState extends State<BookApoitment> {
               child: GridView.builder(
                 itemCount: 12,
                 itemBuilder: (context, index) {
-
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         selected_time_slot = index;
-                        time_slot="${index + 8 < 10 ? "0" : index + 8 - 10 < 3 ? "" : "0"}${index + 8 > 12 ? index + 8 - 12 : index + 8}:00 ${index + 8 > 12 ? "PM" : "AM"}";
+                        time_slot =
+                            "${index + 8 < 10 ? "0" : index + 8 - 10 < 3 ? "" : "0"}${index + 8 > 12 ? index + 8 - 12 : index + 8}:00 ${index + 8 > 12 ? "PM" : "AM"}";
                       });
                     },
                     child: Container(
@@ -134,11 +136,15 @@ class _BookApoitmentState extends State<BookApoitment> {
             ),
             GestureDetector(
               onTap: () {
-                if (selected_time_slot!=-1&&date_selected==true) {
+                if (selected_time_slot != -1 && date_selected == true) {
                   widget.callback2(_textValue);
 
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Success( SheduledDateTiime:  DateFormat('M/d/y').parse(_textValue), time_slot: time_slot,)));
+                      builder: (context) => Success(
+                            SheduledDateTiime:
+                                DateFormat('M/d/y').parse(_textValue),
+                            time_slot: time_slot,
+                          )));
                 }
               },
               child: Container(
@@ -146,7 +152,9 @@ class _BookApoitmentState extends State<BookApoitment> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  color: selected_time_slot != -1 && date_selected==true ?   darkblue:Color(0xffB0B0B0),
+                  color: selected_time_slot != -1 && date_selected == true
+                      ? darkblue
+                      : Color(0xffB0B0B0),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
