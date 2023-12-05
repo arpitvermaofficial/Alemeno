@@ -1,4 +1,5 @@
-  import 'package:flutter/material.dart';
+  import 'package:alemeno/Lab_test/view/test_list.dart';
+import 'package:flutter/material.dart';
   import 'package:flutter_svg/svg.dart';
 
   import '../../Utils/colors.dart';
@@ -6,10 +7,12 @@
 
   class Success extends StatelessWidget {
     final DateTime SheduledDateTiime;
-    const Success({super.key, required this.SheduledDateTiime});
+    final String time_slot;
+    const Success({super.key, required this.SheduledDateTiime, required this.time_slot});
 
     @override
     Widget build(BuildContext context) {
+
       Size size = MediaQuery.of(context).size;
       return Scaffold(
           appBar: AppBar(
@@ -70,13 +73,22 @@
                         style: TextStyle(fontSize: 15, color: Colors.black),
                       ),
                       Text(
-                          "${DateFormat.yMMMd().format(SheduledDateTiime).toString()}.",
+                          "${DateFormat.yMMMd().format(SheduledDateTiime).toString()} | $time_slot",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 15, color: Colors.black)),
                     ],
                   ),
                 ),
                 GestureDetector(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Thanks for Purchasing!')));
+
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>  LabTests(
+
+                        )));
+                  },
                   child: Container(
                     height: size.height * 0.06,
                     width: double.infinity,
@@ -99,4 +111,6 @@
             ),
           ));
     }
+
   }
+

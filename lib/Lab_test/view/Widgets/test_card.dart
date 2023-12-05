@@ -8,9 +8,10 @@ class Test_card extends StatefulWidget {
   final String oldprice;
   final String newprice;
   final String tests;
+  final int index;
   Test_card({
     required this.callback,
-    Key? key, required this.test_name, required this.oldprice, required this.newprice, required this.tests,
+    Key? key, required this.test_name, required this.oldprice, required this.newprice, required this.tests, required this.index,
   }) : super(key: key);
 
   @override
@@ -99,7 +100,7 @@ class _Test_cardState extends State<Test_card> {
                 onTap: () {
                   if (!pressed) {
                     pressed = !pressed;
-                    widget.callback(1);
+                    widget.callback(widget.index);
                   }
                 },
                 child: Container(

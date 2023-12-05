@@ -1,9 +1,12 @@
+
+import 'package:alemeno/Lab_test/model/services/get_tests.dart';
 import 'package:alemeno/Lab_test/view/Widgets/test_card.dart';
 import 'package:alemeno/Lab_test/view/cart_view.dart';
 import 'package:flutter/material.dart';
 import 'package:alemeno/Utils/colors.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../model/testModel.dart';
 import '../model/test_data.dart';
 
 class LabTests extends StatefulWidget {
@@ -14,11 +17,27 @@ class LabTests extends StatefulWidget {
 }
 
 class _LabTestsState extends State<LabTests> {
+  List<TestModel> list_of_tests = [];
+  List<TestModel> cart_tests =[];
+  final GetTests getTests=GetTests();
+  @override
+  void initState() {
+    // TODO: implement initState
+    fetchAllTest();
+    super.initState();
+  }
+  void fetchAllTest() {
+    list_of_tests=getTests.getAllProducts();;
+    setState(() {
+
+    });
+  }
   @override
   int product_count=0;
   addToCart(int newvalue) {
     setState(() {
-      product_count+=newvalue;
+      product_count+=1;
+      cart_tests.add(list_of_tests[newvalue]);
     });
   }
   Widget build(BuildContext context) {
@@ -54,7 +73,7 @@ class _LabTestsState extends State<LabTests> {
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CartView()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CartView(allTest: cart_tests,)));
                     },
                     icon: const Icon(
                       Icons.shopping_cart,
@@ -109,9 +128,9 @@ class _LabTestsState extends State<LabTests> {
                 Container(
                   height: size.height * 0.5,
                   child: GridView.builder(
-                    itemCount: Test_data.length,
+                    itemCount: list_of_tests.length,
                     itemBuilder: (context, index) {
-                      return Test_card(callback: this.addToCart,test_name: Test_data[index]['name'],newprice:Test_data[index]['newPrice'] ,oldprice: Test_data[index]['oldPrice'],tests:Test_data[index]['tests'] ,);
+                      return Test_card(callback: this.addToCart,test_name: list_of_tests[index].name,oldprice: list_of_tests[index].oldPrice ,newprice:list_of_tests[index].newPrice,tests:list_of_tests[index].tests,index: index,);
                     },
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -130,9 +149,9 @@ class _LabTestsState extends State<LabTests> {
                 ),
                 Container(
                     margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      border: Border.fromBorderSide(
+                      border: const Border.fromBorderSide(
                         BorderSide(
                           color: Color(0xffE5E5E5),
                         ),
@@ -146,10 +165,10 @@ class _LabTestsState extends State<LabTests> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height: 40,
-                              width: 40,
+                              height: size.height*0.05,
+                              width: size.height*0.05,
                               decoration: BoxDecoration(
-                                color: Color(0x1A2F80ED),
+                                color: const Color(0x1A2F80ED),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               padding: const EdgeInsets.all(10),
@@ -170,9 +189,9 @@ class _LabTestsState extends State<LabTests> {
                                     'assets/shield.svg',
                                   ),
                                   SizedBox(
-                                    width: 5,
+                                    width:  size.width*0.02,
                                   ),
-                                  Text(
+                                  const Text(
                                     "Safe",
                                     style: TextStyle(
                                         fontSize: 11, color: Colors.white),
@@ -183,33 +202,33 @@ class _LabTestsState extends State<LabTests> {
                           ],
                         ),
                         SizedBox(
-                          height: 10,
+                          height: size.height*0.01,
                         ),
-                        Text(
+                        const Text(
                           "Full body checkup",
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: 18, color: Colors.black),
                         ),
-                        Text(
+                        const Text(
                             "Includes 92 tests \n " +
                                 "\u2022 Blood Glucose Fasting \n " +
                                 "\u2022 Liver Function Test",
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 13, color: Color(0xff6C87AE))),
-                        Text(
+                        const Text(
                           "View more",
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: 13,
                               color: Color(0xff6C87AE),
                               decoration: TextDecoration.underline),
                         ),
                         SizedBox(
-                          height: 10,
+                          height:  size.height*0.01,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               "\u{20B9} 2000/-",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -217,7 +236,7 @@ class _LabTestsState extends State<LabTests> {
                                   fontSize: 20),
                             ),
                             Container(
-                              height: 30,
+                              height:  size.height*0.04,
                               padding: const EdgeInsets.only(
                                   left: 20, right: 20, top: 5, bottom: 5),
                               decoration: BoxDecoration(

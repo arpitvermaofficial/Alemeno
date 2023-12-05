@@ -23,19 +23,20 @@ class _BookApoitmentState extends State<BookApoitment> {
   String _textValue = 'Old Value';
   bool date_selected = false;
   int selected_time_slot = -1;
+  String time_slot = '';
   callback3(
     newValue,
   ) {
-    if(selected_time_slot != -1 && date_selected==true)
+
     setState(() {
       _textValue = newValue;
 
-      widget.callback2(_textValue);
+
     });
   }
 
   callback4(newValue) {
-    if(selected_time_slot != -1 && date_selected==true)
+
     setState(() {
       date_selected = newValue;
     });
@@ -95,6 +96,7 @@ class _BookApoitmentState extends State<BookApoitment> {
                     onTap: () {
                       setState(() {
                         selected_time_slot = index;
+                        time_slot="${index + 8 < 10 ? "0" : index + 8 - 10 < 3 ? "" : "0"}${index + 8 > 12 ? index + 8 - 12 : index + 8}:00 ${index + 8 > 12 ? "PM" : "AM"}";
                       });
                     },
                     child: Container(
@@ -132,9 +134,11 @@ class _BookApoitmentState extends State<BookApoitment> {
             ),
             GestureDetector(
               onTap: () {
-                if (selected_time_slot!=-1) {
+                if (selected_time_slot!=-1&&date_selected==true) {
+                  widget.callback2(_textValue);
+
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Success( SheduledDateTiime:  DateFormat('d/M/y').parse(_textValue),)));
+                      builder: (context) => Success( SheduledDateTiime:  DateFormat('M/d/y').parse(_textValue), time_slot: time_slot,)));
                 }
               },
               child: Container(
